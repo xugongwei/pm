@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ibona.pm.mapper.ProjectMapper">
+    <insert id="insertProject">
+        insert into t_project(project_name, project_desc, project_principal, created_time)
+        values (#{project.projectName},#{project.projectDesc},#{project.projectPrincipal},now())
+    </insert>
+
+    <update id="updateProject">
+        update t_project
+        set project_name=#{project.projectName},project_desc=#{project.projectDesc},project_principal=#{project.projectPrincipal},created_time=now()
+        where id=#{project.id}
+    </update>
+
+    <update id="updateByProjectId" parameterType="integer">
+        update t_project
+        set is_delete=1
+        where id=#{id}
+    </update>
+
+    <delete id="deleteProject" parameterType="integer">
+        delete from t_project where id=#{id}
+    </delete>
+
+    <select id="listProject" parameterType="integer" resultType="cn.ibona.pm.entity.Project">
+        select *
+        from t_project
+        <if test="isDelete != null">
+            where is_delete=#{isDelete}
+        </if>
+    </select>
+    <select id="selectByProjectId" parameterType="integer" resultType="cn.ibona.pm.entity.Project">
+        select * from t_project where id=#{id}
+    </select>
+</mapper>

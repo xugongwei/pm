@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.ibona.pm.mapper.ServiceMapper">
+
+    <insert id="insert">
+        insert into t_service(service_name, project_id, service_desc, service_language, service_principal, git_address, git_branch, service_version, created_time, is_delete)
+        values (#{service.serviceName},#{service.projectId},#{service.serviceDesc},#{service.serviceLanguage},#{service.servicePrincipal},#{service.gitAddress},#{service.gitBranch},1,now(),0)
+    </insert>
+
+    <delete id="deleteById" parameterType="integer">
+        delete from t_service where id=#{id}
+    </delete>
+
+    <select id="listByProjectId" parameterType="integer" resultType="cn.ibona.pm.entity.Service">
+        select id,service_name,service_desc,service_language,service_principal,service_version,git_address,git_branch,created_time,is_delete
+        from t_service
+        where project_id=#{id}
+    </select>
+
+    <select id="selectById" parameterType="integer" resultType="cn.ibona.pm.entity.Service">
+        select * from t_service where id=#{id}
+    </select>
+</mapper>
