@@ -4,12 +4,15 @@ import cn.ibona.pm.entity.Project;
 import cn.ibona.pm.entity.Service;
 import cn.ibona.pm.service.ProjectService;
 import cn.ibona.pm.service.ServiceService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -34,14 +37,15 @@ public class ServiceController {
     }
 
     @RequestMapping(value = "/list/{id}", method = RequestMethod.GET)
-    public String list(@PathVariable(value = "id") Integer id, Model model, HttpServletRequest request) {
+    public String list(@PathVariable(value = "id") Integer id, @RequestParam(value = "pn",defaultValue = "1") Integer pn, Model model, HttpServletRequest request) {
         ServletContext servletContext = request.getSession().getServletContext();
-
+        PageHelper.startPage(pn, 10);
         List<Service> serviceList = serviceService.listByProjectId(id, 0);
+        PageInfo<Service> pageInfo = new PageInfo<>(serviceList,5);
         Project project = projectService.selectByProjectId(id);
         servletContext.setAttribute("project", project);
 
-        model.addAttribute("serviceList", serviceList);
+        model.addAttribute("pageInfo", pageInfo);
         model.addAttribute("projectId", id);
         return "service/service";
     }
