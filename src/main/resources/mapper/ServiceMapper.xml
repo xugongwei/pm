@@ -6,15 +6,30 @@
         insert into t_service(service_name, project_id, service_desc, service_language, service_principal, git_address, git_branch, service_version, created_time, is_delete)
         values (#{service.serviceName},#{service.projectId},#{service.serviceDesc},#{service.serviceLanguage},#{service.servicePrincipal},#{service.gitAddress},#{service.gitBranch},1,now(),0)
     </insert>
+    <update id="updateById">
+        update t_service
+        set service_name=#{service.serviceName},service_desc=#{service.serviceDesc},service_language=#{service.serviceLanguage},service_principal=#{service.servicePrincipal},git_address=#{service.gitAddress},git_branch=#{service.gitBranch},service_version=service_version+1
+        where id=#{service.id}
+    </update>
+
+    <update id="hiddenById">
+        update t_service
+        set is_delete=1
+        where id=#{id}
+    </update>
 
     <delete id="deleteById" parameterType="integer">
         delete from t_service where id=#{id}
     </delete>
 
     <select id="listByProjectId" parameterType="integer" resultType="cn.ibona.pm.entity.Service">
-        select id,service_name,service_desc,service_language,service_principal,service_version,git_address,git_branch,created_time,is_delete
+        select
+        id,service_name,service_desc,service_language,service_principal,service_version,git_address,git_branch,created_time,is_delete
         from t_service
         where project_id=#{id}
+        <if test="isDelete != null">
+            and is_delete=#{isDelete}
+        </if>
     </select>
 
     <select id="selectById" parameterType="integer" resultType="cn.ibona.pm.entity.Service">

@@ -22,8 +22,8 @@ public class ServiceServiceImpl implements ServiceService {
     }
 
     @Override
-    public List<Service> listByProjectId(Integer id) {
-        return serviceMapper.listByProjectId(id);
+    public List<Service> listByProjectId(Integer id, Integer isDelete) {
+        return serviceMapper.listByProjectId(id, isDelete);
     }
 
     @Override
@@ -34,6 +34,16 @@ public class ServiceServiceImpl implements ServiceService {
     @Override
     public int insert(Service service) {
         return serviceMapper.insert(service);
+    }
+
+    @Override
+    public int updateById(Service service) {
+        return serviceMapper.updateById(service);
+    }
+
+    @Override
+    public int hiddenById(Integer id) {
+        return serviceMapper.hiddenById(id);
     }
 
     @Override

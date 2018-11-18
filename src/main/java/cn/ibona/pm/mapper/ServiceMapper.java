@@ -11,11 +11,15 @@ import java.util.List;
  */
 public interface ServiceMapper {
 
-    List<Service> listByProjectId(@Param("id") Integer id);
+    List<Service> listByProjectId(@Param("id") Integer id,@Param("isDelete") Integer isDelete);
 
     Service selectById(@Param("id") Integer id);
 
     int insert(@Param("service") Service service);
+
+    int updateById(@Param("service") Service service);
+
+    int hiddenById(@Param("id") Integer id);
 
     int deleteById(@Param("id") Integer id);
 

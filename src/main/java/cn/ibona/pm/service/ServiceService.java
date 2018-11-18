@@ -10,11 +10,15 @@ import java.util.List;
  */
 public interface ServiceService {
 
-    List<Service> listByProjectId(Integer id);
+    List<Service> listByProjectId(Integer id,Integer isDelete);
 
     Service selectById(Integer id);
 
     int insert(Service service);
+
+    int updateById(Service service);
+
+    int hiddenById(Integer id);
 
     int deleteById(Integer id);
 }

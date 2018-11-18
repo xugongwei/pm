@@ -39,7 +39,7 @@ public class ServiceController {
     public String list(@PathVariable(value = "id") Integer id, Model model, HttpServletRequest request) {
         ServletContext servletContext = request.getSession().getServletContext();
 
-        List<Service> serviceList = serviceService.listByProjectId(id);
+        List<Service> serviceList = serviceService.listByProjectId(id, 0);
         Project project = projectService.selectByProjectId(id);
         servletContext.setAttribute("project", project);
 
@@ -60,6 +60,26 @@ public class ServiceController {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public String insert(Service service) {
         int insert = serviceService.insert(service);
+        return "redirect:/api/pm/project/list";
+    }
+
+    @RequestMapping("/toUpdate/{id}")
+    public String updatePage(@PathVariable("id") Integer id, Model model) {
+        Service service = serviceService.selectById(id);
+        model.addAttribute("service", service);
+        return "service/update";
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.PUT)
+    public String update(Service service) {
+        int i = serviceService.updateById(service);
+        return "redirect:/api/pm/project/list";
+    }
+
+
+    @RequestMapping("/hidden/{id}")
+    public String hidden(@PathVariable("id") Integer id) {
+        serviceService.hiddenById(id);
         return "redirect:/api/pm/project/list";
     }
 
