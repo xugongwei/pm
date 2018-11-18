@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mysql://localhost:3306/pm?characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://120.78.74.96:3306/pm?characterEncoding=utf8&autoReconnect=true&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
     password: 123456
     druid:
